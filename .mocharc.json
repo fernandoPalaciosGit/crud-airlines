@@ -1,0 +1,14 @@
+{
+  "diff": true,
+  "extension": [
+    "js"
+  ],
+  "package": "./package.json",
+  "timeout": 2000,
+  "ui": "bdd",
+  "spec": "./layers/front-layer/**/*.spec.js",
+  "require": [
+    "@babel/register",
+    "./setup.js"
+  ]
+}
