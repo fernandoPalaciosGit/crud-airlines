@@ -26,38 +26,47 @@ export default class AirlineDetails {
     static SERVICE = 'airline-details';
 
     constructor(details = {}) {
-        this.details = details;
+        this.airlines = details;
     }
 
     getDetails() {
-        return http.get(AirlineDetails.SERVICE).text()
+        return http.get(AirlineDetails.SERVICE).json()
             .then(manageServiceResponse.bind(this),);
     }
 
-    updateDetails(details) {
-        return http.put(`${AirlineDetails.SERVICE}/update`, details).json()
+    getAirlines() {
+        return this.airlines;
+    }
+
+    getDetail(id) {
+        return http.get(`${AirlineDetails.SERVICE}/${id}`).json()
+            .then(manageServiceResponse.bind(this),);
+    }
+
+    updateDetails(id, details) {
+        return http.put(`${AirlineDetails.SERVICE}/${id}`, details).json()
             .then(manageServiceResponse.bind(this), onErrorDetailsService.bind(this));
     }
 
     createDetails(details) {
-        return http.post(`${AirlineDetails.SERVICE}/create`, details).json()
+        return http.post(AirlineDetails.SERVICE, details).json()
             .then(manageServiceResponse.bind(this), onErrorDetailsService.bind(this));
     }
 
     deleteDetails(id) {
-        return http.delete(`${AirlineDetails.SERVICE}/delete/${id}`).text()
+        return http.delete(`${AirlineDetails.SERVICE}/${id}`).text()
             .then(manageServiceResponse.bind(this), onErrorDetailsService.bind(this));
     }
 
     cleanErrors() {
-        this.details.errors = [];
+        this.airlines.errors = [];
     }
 
     getErrors() {
-        return this.details.errors || [];
+        return this.airlines.errors || [];
     }
 
     extend(...details) {
-        return Object.assign(this.details, ...details);
+        return Object.assign(this.airlines, ...details);
     }
 }

@@ -5,22 +5,22 @@ let promiseAirlines = null;
 const getAirlinesDetails = () => {
     if (promiseAirlines === null) {
         const airlineDetails = new AirlineDetails();
-        promiseAirlines = airlineDetails.createDetails().then(() => airlineDetails, () => airlineDetails);
+        promiseAirlines = airlineDetails.getDetails().then(() => airlineDetails, () => airlineDetails);
     }
     return promiseAirlines;
 };
 
-const getAirlines = () => getAirlinesDetails()
-    .then((airlines) => airlines.getDetails());
+export const getAirlines = () => getAirlinesDetails()
+    .then((airlines) => airlines.getAirlines());
 
-const updateAirlines = (details) => getAirlinesDetails()
-    .then((airlines) => airlines.updateDetails(details));
+export const getAirline = (id = '') => getAirlinesDetails()
+    .then((airlines) => airlines.getDetail(id));
 
-const deleteAirlines = ({id = ''}) => getAirlinesDetails()
+export const createAirline = (details = {}) => getAirlinesDetails()
+    .then((airlines) => airlines.createDetails(details));
+
+export const updateAirlines = ({id = '', details = {}}) => getAirlinesDetails()
+    .then((airlines) => airlines.updateDetails(id, details));
+
+export const deleteAirlines = ({id = ''}) => getAirlinesDetails()
     .then((airlines) => airlines.deleteDetails(id));
-
-export default {
-    getAirlines,
-    updateAirlines,
-    deleteAirlines,
-};
