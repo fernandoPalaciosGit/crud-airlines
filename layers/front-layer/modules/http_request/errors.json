@@ -1,0 +1,8 @@
+{
+  "apiRejected": [
+    {
+      "type": "BROKEN_FLOW_ERROR",
+      "message": "API_RESPONSE_BROKEN_FLOW"
+    }
+  ]
+}

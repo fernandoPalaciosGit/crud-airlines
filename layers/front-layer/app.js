@@ -1,1 +1,1 @@
-window.addEventListener('ready', () => console.info(window.document.title), false);
+window.addEventListener('load', () => console.info(window.document.title), false);

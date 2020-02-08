@@ -11,6 +11,11 @@ const post = (requestParams) => ({
     body: JSON.stringify(requestParams),
 });
 
+const remove = () => ({
+    credentials: 'same-origin',
+    method: 'DELETE',
+});
+
 const put = (requestParams) => ({
     credentials: 'same-origin',
     method: 'PUT',
@@ -28,5 +33,9 @@ export default {
 
     put(url, requestParams = {}) {
         return new HttpRequest(url, put(requestParams));
+    },
+
+    delete(url) {
+        return new HttpRequest(url, remove());
     },
 };
