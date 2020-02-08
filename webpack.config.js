@@ -4,8 +4,10 @@ module.exports = {
         rules: [
             {
                 test: /\.(js)$/,
-                exclude: /node_modules/,
-                use: ['babel-loader']
+                exclude: [
+                    /node_modules/,
+                    '/layers/front-layer/spec_setup.js',
+                ],
             }
         ]
     },

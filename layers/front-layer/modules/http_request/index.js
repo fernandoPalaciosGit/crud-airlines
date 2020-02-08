@@ -1,4 +1,4 @@
-import HttpRequest from 'http_headers';
+import HttpRequest from './http_headers';
 
 const get = () => ({
     credentials: 'same-origin',

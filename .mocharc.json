@@ -9,6 +9,6 @@
   "spec": "./layers/front-layer/**/*.spec.js",
   "require": [
     "@babel/register",
-    "./setup.js"
+    "./layers/front-layer/spec_setup.js"
   ]
 }
