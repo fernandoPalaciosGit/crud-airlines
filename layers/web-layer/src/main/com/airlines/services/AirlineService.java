@@ -69,7 +69,7 @@ public class AirlineService {
     }
 
     @RequestMapping(value = "/{iata}", method = RequestMethod.DELETE)
-    ResponseEntity<?> extendAirline(@PathVariable String iata) {
+    ResponseEntity<?> removeAirline(@PathVariable String iata) {
         AirlineService.repository.delete(AirlineService.repository.findByIata(iata));
         return new ResponseEntity<>(null, null, HttpStatus.CREATED);
     }

@@ -9,6 +9,8 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockServletContext;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -20,8 +22,9 @@ import java.net.URI;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AirlineServiceTest extends TestCase {
@@ -58,46 +61,66 @@ public class AirlineServiceTest extends TestCase {
     @Test
     public void shouldGetAllAirlines() {
         when(airlineRepository.findAll()).thenReturn(airlineEntities);
+
         assertEquals(airlineService.getAllAirlines(), airlineEntities);
     }
 
     @Test
     public void shouldGetAllAirlineNames() {
         when(airlineRepository.findAll()).thenReturn(airlineEntities);
+
         assertEquals(airlineService.getAllAirlineNames(), Arrays.asList(airlineEntityOne.getName(), airlineEntityTwo.getName()));
     }
 
     @Test
     public void shouldGetAirlineByIata() {
         when(airlineRepository.findByIata(anyString())).thenReturn(airlineEntityOne);
+
         assertEquals(airlineService.getAirlineByIata("iata"), airlineEntityOne);
     }
 
     @Test(expected = ErrorService.class)
     public void shouldThrowErrorServiceWhenIataNotValid() {
-        when(airlineRepository.findByIata(anyString())).thenReturn(null);
         String searchIata = "iata";
         ErrorService error = new ErrorService(searchIata);
+        when(airlineRepository.findByIata(anyString())).thenReturn(null);
+
         assertEquals(airlineService.getAirlineByIata(searchIata), error);
     }
 
     @Test
     public void shouldAddAirline() {
+        ResponseEntity<?> response = airlineService.addAirline(airlineEntityOne);
 
+        verify(airlineRepository).save(airlineEntityOne);
+        assertEquals(response.getStatusCode(), HttpStatus.CREATED);
     }
 
     @Test
-    void shouldUpdateAirlineWithNewParameter() {
+    public void shouldUpdateAirlineWithNewParameter() {
+        when(airlineRepository.findByIata(airlineEntityOne.getIata())).thenReturn(airlineEntityOne);
+        ResponseEntity<?> response = airlineService.updateAirline(airlineEntityTwo, airlineEntityOne.getIata());
 
+        assertEquals(airlineEntityOne.getName(), airlineEntityTwo.getName());
+        assertEquals(response.getStatusCode(), HttpStatus.CREATED);
     }
 
     @Test
-    void shouldCreateNewAirlineWithNewParameter() {
+    public void shouldCreateNewAirlineWithNewParameter() {
+        when(airlineRepository.findByIata(airlineEntityOne.getIata())).thenReturn(null);
+        ResponseEntity<?> response = airlineService.updateAirline(airlineEntityTwo, airlineEntityOne.getIata());
 
+        verify(airlineRepository).save(airlineEntityTwo);
+        assertEquals(response.getStatusCode(), HttpStatus.CREATED);
     }
 
     @Test
-    void shouldDeleteAirline() {
+    public void shouldDeleteAirline() {
+        String searchIata = "iata";
+        when(airlineRepository.findByIata(searchIata)).thenReturn(airlineEntityOne);
+        ResponseEntity<?> response = airlineService.removeAirline(searchIata);
 
+        verify(airlineRepository).delete(airlineEntityOne);
+        assertEquals(response.getStatusCode(), HttpStatus.CREATED);
     }
 }
