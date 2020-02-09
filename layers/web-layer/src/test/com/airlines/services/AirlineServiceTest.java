@@ -9,10 +9,14 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockServletContext;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -25,14 +29,19 @@ import java.util.List;
 import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AirlineServiceTest extends TestCase {
-    private static final URI TESTING_SERVICE = URI.create("http://localhost:8080/");
+    private static final URI TESTING_SERVICE = URI.create("http://localhost:8080/airline-details");
     private AirlineEntity airlineEntityOne;
     private AirlineEntity airlineEntityTwo;
     private List<AirlineEntity> airlineEntities;
 
+    @Autowired
+    private MockMvc mockMvc;
     @Mock
     AirlineRepository airlineRepository;
     @InjectMocks
@@ -122,5 +131,15 @@ public class AirlineServiceTest extends TestCase {
 
         verify(airlineRepository).delete(airlineEntityOne);
         assertEquals(response.getStatusCode(), HttpStatus.CREATED);
+    }
+
+    @Test
+    public void shouldReturnNotAllowedMethodExceptionWhenUpdateAirline() throws Exception {
+        MockHttpServletRequestBuilder request = post(TESTING_SERVICE)
+                .accept(MediaType.APPLICATION_JSON_VALUE).content(String.valueOf(new AirlineEntity()));
+
+        mockMvc.perform(request)
+                .andDo(print())
+                .andExpect(status().isMethodNotAllowed());
     }
 }
