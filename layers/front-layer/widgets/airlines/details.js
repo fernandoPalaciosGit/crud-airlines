@@ -38,13 +38,13 @@ export default class AirlineDetails {
         return this.airlines;
     }
 
-    getDetail(id) {
-        return http.get(`${AirlineDetails.SERVICE}/${id}`).json()
-            .then(manageServiceResponse.bind(this),);
+    getDetail(iata) {
+        return http.get(`${AirlineDetails.SERVICE}/${iata}`).json()
+            .then(manageServiceResponse.bind(this), onErrorDetailsService.bind(this));
     }
 
-    updateDetails(id, details) {
-        return http.put(`${AirlineDetails.SERVICE}/${id}`, details).json()
+    updateDetails(iata, details) {
+        return http.put(`${AirlineDetails.SERVICE}/${iata}`, details).json()
             .then(manageServiceResponse.bind(this), onErrorDetailsService.bind(this));
     }
 
@@ -53,8 +53,8 @@ export default class AirlineDetails {
             .then(manageServiceResponse.bind(this), onErrorDetailsService.bind(this));
     }
 
-    deleteDetails(id) {
-        return http.delete(`${AirlineDetails.SERVICE}/${id}`).text()
+    deleteDetails(iata) {
+        return http.delete(`${AirlineDetails.SERVICE}/${iata}`).text()
             .then(manageServiceResponse.bind(this), onErrorDetailsService.bind(this));
     }
 

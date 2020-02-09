@@ -13,14 +13,14 @@ const getAirlinesDetails = () => {
 export const getAirlines = () => getAirlinesDetails()
     .then((airlines) => airlines.getAirlines());
 
-export const getAirline = (id = '') => getAirlinesDetails()
-    .then((airlines) => airlines.getDetail(id));
+export const getAirline = (iata = '') => getAirlinesDetails()
+    .then((airlines) => airlines.getDetail(iata));
 
 export const createAirline = (details = {}) => getAirlinesDetails()
     .then((airlines) => airlines.createDetails(details));
 
-export const updateAirlines = ({id = '', details = {}}) => getAirlinesDetails()
-    .then((airlines) => airlines.updateDetails(id, details));
+export const updateAirlines = ({iata = '', details = {}}) => getAirlinesDetails()
+    .then((airlines) => airlines.updateDetails(iata, details));
 
-export const deleteAirlines = ({id = ''}) => getAirlinesDetails()
-    .then((airlines) => airlines.deleteDetails(id));
+export const deleteAirlines = ({iata = ''}) => getAirlinesDetails()
+    .then((airlines) => airlines.deleteDetails(iata));
