@@ -8,7 +8,7 @@ const serviceJsLogger = (message) =>
         message,
         hash: window.location.hash,
         queryString: window.location.search.substr(1),
-    });
+    }).json();
 
 const parseStackTrace = (message, stackFrames) => {
     const stackTraceError = stackFrames.map((sf) => sf.toString()).join(STACK_JOIN_LABEL);
