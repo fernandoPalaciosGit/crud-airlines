@@ -19,8 +19,7 @@ public class AirlineEntity {
     private String name;
     private String phoneNumber;
 
-    public AirlineEntity(Long id, String iata, String icao, String name, String phoneNumber) {
-        this.id = id;
+    public AirlineEntity(String iata, String icao, String name, String phoneNumber) {
         this.iata = iata;
         this.icao = icao;
         this.name = name;

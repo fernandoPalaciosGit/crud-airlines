@@ -51,7 +51,7 @@ public class AirlineService {
     }
 
     @RequestMapping(value = "/{iata}", method = RequestMethod.PUT)
-    ResponseEntity<?> extendAirline(@RequestBody AirlineEntity airline, @PathVariable String iata) {
+    ResponseEntity<?> updateAirline(@RequestBody AirlineEntity airline, @PathVariable String iata) {
         Optional.ofNullable(AirlineService.repository.findByIata(iata))
                 .map((entry) -> {
                     entry.setIata(airline.getIata());
