@@ -10,12 +10,15 @@
   "author": "Fernando Palacios Landi <fernandopalacioslandi@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
     "regenerator-runtime": "^0.13.3",
     "stacktrace-js": "^2.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
     "@babel/preset-env": "^7.8.4",
+    "@babel/preset-react": "^7.8.3",
     "@babel/register": "^7.0.0",
     "chai": "^4.2.0",
     "faker": "^4.1.0",

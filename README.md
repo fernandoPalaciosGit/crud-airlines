@@ -11,8 +11,8 @@ CRUD is build in JAVA spring
 * `http://localhost:8080`
 
 ## Deploy API service
-* $mvn clean install
-* $mvn tomcat7:run
+* mvn clean install
+* mvn tomcat7:run
 
 ### URI RESOURCES
 - **/airline-details -GET** -List&lt;Airlines&gt; getAllAirlines: get all airline list
